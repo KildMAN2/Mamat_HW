@@ -17,7 +17,7 @@ while read -r link;
 	else
 	    echo "$link, Netanyahu, $N, Gantz, $G" >> results.csv
 	fi
-	rm article_html
+	rm article.html
 done <<< "$URLs"
 
 
