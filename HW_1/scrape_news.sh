@@ -18,7 +18,7 @@ for line in $URLS ;
      if (( total_count == 0 )); then
 		echo "$line, -" >> results.csv
 	else 
-	    echo "$line, Netanyahu,"" $N"", Gantz," >> results.csv
+	    echo "$line, Netanyahu, $N, Gantz, $G">> results.csv
 	fi
 done
  
