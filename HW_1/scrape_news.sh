@@ -13,9 +13,9 @@ while read -r link;
 	G=$(grep -o "Gantz" article,html | wc -l)
 
   if ((N==0)) && ((G==0)); then
-		  echo "$link"", -" >> results.csv
+		  echo "$link, -" >> results.csv
 	else
-	    echo "$link"", Netanyahu,"" $N"", Gantz,"" $G" >> results.csv
+	    echo "$link, Netanyahu, $N, Gantz, $G" >> results.csv
 	fi
 	rm article_html ./path/file
 done <<< "$URLs"
