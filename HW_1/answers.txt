@@ -1,0 +1,5 @@
+A. It will take a lot of hours to count the appearances of a certain word manually.
+
+B. We can understand that using Bash can ssave us a lot of time and effort, another task that the idea of this exercise can be useful to do is to count how many articles a certain name appeared in.
+
+C. To repeat the task every hour we can use the command crontab, and to scan only new articles we can use the comand uniq.
