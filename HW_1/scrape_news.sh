@@ -1,6 +1,6 @@
 #! /bin/bash
 
-wget -q https://www.ynetnews.com/category/3082
+wget https://www.ynetnews.com/category/3082
 URLS=$(grep -oP "https://www.ynetnews.com/article/[a-zA-Z0-9]+" 3082 |
 	   sort |
 	   uniq)
@@ -15,8 +15,8 @@ for line in $URLS ;
 	G=$(grep -o Gantz "$article" | wc -l)
   total_count=$((N + G))
 
-     if (( total_count == 0 )); then
-		echo "$line, -" >> results.csv
+  if (( total_count == 0 )); then
+		  echo "$line, -" >> results.csv
 	else 
 	    echo "$line, Netanyahu, $N, Gantz, $G">> results.csv
 	fi
