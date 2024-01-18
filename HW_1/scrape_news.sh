@@ -13,8 +13,9 @@ for line in $URLS ;
 	
 	N=$(grep -o Netanyahu "$article" | wc -l)
 	G=$(grep -o Gantz "$article" | wc -l)
-	
-    if (( ((N==0)) && (( G==0 )) )); then
+  total_count=$((N + G))
+
+     if (( total_count == 0 )); then
 		echo "$line"", -" >> results.csv
 	else 
 	    echo "$line"", Netanyahu,"" $N"", Gantz," >> results.csv
