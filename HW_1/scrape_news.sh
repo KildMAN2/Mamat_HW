@@ -7,18 +7,19 @@ URLS=$(grep -oP "https://www.ynetnews.com/article/[a-zA-Z0-9]+" 3082 |
 
 echo "$URLS" | wc -w > results.csv
 
-for line in $URLS ;
+for url in $URLS ;
   do
-	article=$(echo "$line" | grep -o '[^/]\+$')
+    wqet -q "$url" -O article.html
+	article_name=$(echo "$url" | awk -F/ '{print $NF}')
 
-	N=$(grep -o Netanyahu "$article" | wc -l)
-	G=$(grep -o Gantz "$article" | wc -l)
+	N=$(grep -o 'Netanyahu' article.html | wc -l)
+	G=$(grep -o 'Gantz' article.html | wc -l)
   total_count=$((N + G))
 
   if (( total_count == 0 )); then
-		  echo "$line, -" >> results.csv
+		  echo "$url, -" >> results.csv
 	else
-	    echo "$line, Netanyahu, $N, Gantz, $G" >> results.csv
+	    echo "$url, Netanyahu, $N, Gantz, $G" >> results.csv
 	fi
 done
 
