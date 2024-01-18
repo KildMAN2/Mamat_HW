@@ -9,7 +9,7 @@ echo "$URLS" | wc -w > results.csv
 
 for line in $URLS ;
   do
-	article=$(echo "$line" | grep -o '[^/]\+$') 
+	article=$(basename "$line")
 	
 	N=$(grep -o Netanyahu "$article" | wc -l)
 	G=$(grep -o Gantz "$article" | wc -l)
