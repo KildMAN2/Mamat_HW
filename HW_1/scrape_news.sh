@@ -1,20 +1,26 @@
-user
 #!/bin/bash
 
-site="https://www.ynetnews.com/category/3082"
-web_data=$(wget --no-check-certificate -O- "$site" 2>/dev/null)
-URLs=$(echo "$web_data" | grep -oE "https://(www.)?ynetnews.com/article/[a-zA-Z0-9]+" | uniq | sort)
+site="https://ynetnews.com/category/3082"
 
- for url in $URLs;
-  do
-	article=$(wget --no-check-certificate -O- "$url" 2>/dev/null)
+website_data=$(wget --no-check-certificate -O - "$site" 2>/dev/null) #website_data contains all the content
 
-	N=$(grep -oP "Netanyahu" <<< "$article" | wc -l)
-	G=$(grep -oP "Gantz" <<< "$article" | wc -l)
 
-  if [ "$N" -eq 0 ] && [ "$G" -eq 0 ]; then
-    echo "$url,"""-
-	else
-    echo "$url,""Netanyahu, $N,""Gantz, ""$G"
+articles=$(echo "$website_data" | \
+			grep -oP "https://(www.)?ynetnews.com/article/[0-9a-zA-Z]+" | sort | uniq) #remove dupilcates
+
+for article in $articles; do
+	echo -n "$article" >> results.csv #prints each url
+
+	temp=$(wget --no-check-certificate -O - "$article" 2>/dev/null)
+	#in every article it counts how many times a name had appeared
+	count_N=$(echo "$temp" | grep -o "Netanyahu" | wc -w)
+	count_G=$(echo "$temp" | grep -o "Gantz" | wc -w)
+
+	if [ $count_N -eq 0 ] && [ $count_G -eq 0 ] ; then #if no name was in article it prints ", -"
+		echo ",-" >> results.csv
+	else #otherwise prints how many times each name appeared
+		echo -n ", Netanyahu, $count_N"
+		echo -n ", Gantz, $count_G"
+		echo
 	fi
 done
