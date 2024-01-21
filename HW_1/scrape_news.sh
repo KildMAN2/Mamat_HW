@@ -1,5 +1,5 @@
-User
-#! /bin/bash
+user
+#!/bin/bash
 
 site="https://www.ynetnews.com/category/3082"
 web_data=$(wget --no-check-certificate -O- "$site" 2>/dev/null)
