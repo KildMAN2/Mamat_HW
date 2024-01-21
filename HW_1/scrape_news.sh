@@ -8,7 +8,7 @@ wget -O 3082 --no-check-certificate "$site" 2>/dev/null
 URLs=$(grep -oP "https://(www\.)?ynetnews.com/article/[a-zA-Z0-9]+" 3082 | sort | uniq)
 
 # Step 3: Count unique URLs
-echo $(wc -l <<< "$URLs")
+echo $(wc -l <<< "$URLs") >>results.csv
 
 # Step 4: Loop through each URL and process
 for url in $URLs; do
@@ -21,8 +21,8 @@ for url in $URLs; do
 
     # Step 7: Print results
     if [ "$N" -eq 0 ] && [ "$G" -eq 0 ]; then
-        echo "$url, -"
+        echo "$url, -" >> results.csv
     else
-        echo "$url, Netanyahu, $N, Gantz, $G"
+        echo "$url, Netanyahu, $N, Gantz, $G" >>results.csv
     fi
 done
