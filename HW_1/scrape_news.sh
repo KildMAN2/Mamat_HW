@@ -3,7 +3,7 @@ User
 
 site="https://www.ynetnews.com/category/3082"
 web_data=$(wget --no-check-certificate -O- "$site" 2>/dev/null)
-URLs=$(echo "$web_data" |\ grep -oP "https://(www.)?ynetnews.com/article/[a-zA-Z0-9]+" | sort | uniq)
+URLs=$(echo "$web_data" | grep -oP "https://(www.)?ynetnews.com/article/[a-zA-Z0-9]+" | uniq | sort)
 
  for url in $URLs;
   do
