@@ -1,28 +1,25 @@
-#!/bin/bash
+#! /bin/bash
 
-# Step 1: Fetch the main page
-site="https://www.ynetnews.com/category/3082"
-wget -O 3082 --no-check-certificate "$site" 2>/dev/null
+wget https://www.ynetnews.com/category/3082
+URLs=$(grep -oP "https://www.ynetnews.com/article/[a-zA-Z0-9]+" 3082 |
+	   sort |
+	   uniq)
 
-# Step 2: Extract article URLs
-URLs=$(grep -oP "https://(www\.)?ynetnews.com/article/[a-zA-Z0-9]+" 3082 | sort | uniq)
+echo $URLs | wc -w
+wget -iO - $URLs
+for line in $URLs ;
+  do
+	article=$(echo "$line" | grep -o '[^/]\+$')
 
-# Step 3: Count unique URLs
-echo $(wc -l <<< "$URLs") >>results.csv
+	N=$(grep -o Netanyahu "$article" | wc -l)
+	G=$(grep -o Gantz "$article" | wc -l)
+	B=$(grep -o Bennett "$article" | wc -l)
+	P=$(grep -o Peretz "$article" | wc -l)
 
-# Step 4: Loop through each URL and process
-for url in $URLs; do
-    # Step 5: Fetch article content
-    article=$(wget --no-check-certificate -O- "$url" 2>/dev/null)
-
-    # Step 6: Count occurrences of names
-    N=$(grep -o "Netanyahu" <<< "$article" | wc -w)
-    G=$(grep -o "Gantz" <<< "$article" | wc -w)
-
-    # Step 7: Print results
-    if [ "$N" -eq 0 ] && [ "$G" -eq 0 ]; then
-        echo "$url, -" >> results.csv
-    else
-        echo "$url, Netanyahu, $N, Gantz, $G" >>results.csv
-    fi
+    if (( (( $N==0 )) && (( $G==0 )) )); then
+		echo "$line"", -" >> results.csv
+	else
+	    echo "$line"", Netanyahu,"" $N"", Gantz,"
+	    " $G"
+	fi
 done
