@@ -18,7 +18,7 @@ for line in $URLs ;
 		echo "$line"", -"
 	else 
 	    echo "$line"", Netanyahu,"" $N"", Gantz,"
-	    " $G"", Bennett,"" $B"", Perez,""$P"
+	    " $G"
 	fi
 done
  
