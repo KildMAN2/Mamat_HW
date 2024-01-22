@@ -1,0 +1,1 @@
+Answer 1: We have repeated a lot of code between files, for example between min.c/max.c/min.c/median.c,the main function is almost the same  for all of them, we could write one function to check the inputs for all of these files and doing that we can decrease the number of lines for each file.
