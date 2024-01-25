@@ -1,18 +1,5 @@
 #include <stdio.h>
-/*
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
+
 
 #define MAX_ARRAY_SIZE 10000
 #define HASH_LENGTH MAX_ARRAY_SIZE * 2 +1
@@ -25,34 +12,31 @@ int main() {
 	int nums[MAX_ARRAY_SIZE] = {0};
 	int array_size = 0;
 
-	scanf("%d", &target);
+	if(!scanf("%d", &target))
+        return 0;
 
-	while (scanf("%d", &nums[array_size++]) == 1);
-	array_size--;
+	while (array_size < MAX_ARRAY_SIZE && scanf("%d", &nums[array_size]) == 1)
+    {
+        array_size++;
+    }
+    if(array_size <2)
+        return 0;
 
 	twoSum(nums, array_size, target);
 
 	return (0);
 }
 
-void twoSum(int nums[], int nums_size, int target)
-{
-	/* YOUR CODE HERE */
-    int hashtable[HASH_LENGTH];
-    for (int i = 0; i < HASH_LENGTH; ++i)
-    {
-       hashtable[i] = INSTALLATION;
-    }
-    for (int i = 0; i < nums_size; ++i)
-    {
-        int comp = target - nums[i];
-        if(hashtable[comp + MAX_ARRAY_SIZE] != INSTALLATION)
-        {
-            printf("(%d, %d)\n", hashtable[comp + MAX_ARRAY_SIZE],i);
-            return;
+void twoSum(int nums[], int nums_size, int target) {
+    /* YOUR CODE HERE */
+    for (int i = 0; i < nums_size - 1; ++i) {
+        for (int j = i + 1; j < nums_size; ++j) {
+            if (nums[i] + nums[j] == target) {
+                printf("(%d, %d)\n", i, j);
+                return;
+            }
         }
-        hashtable[nums[i] + MAX_ARRAY_SIZE] = i;
-    }
 
+    }
 }
 

@@ -25,7 +25,21 @@ int edit_dist(char word1[], char word2[]) {
     int w2_length = strlen(word2) + 1;
 
     int distance [w1_length][w2_length];
-
+    for (int i = 0; i < w1_length; ++i)
+    {
+        for (int j = 0; j < w2_length; ++j)
+        {
+            distance[i][j] =0;
+        }
+    }
+    for (int i = 0; i < w1_length; ++i)
+    {
+        distance[i][0] =i;
+    }
+    for (int i = 0; i < w2_length; ++i)
+    {
+        distance[0][i] = i;
+    }
     for (int i = 1; i < w1_length; ++i)
     {
         for (int j = 1; j < w2_length; ++j)

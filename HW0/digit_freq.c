@@ -11,7 +11,7 @@
 int main()
 {
     char s [MAX_LENGTH];
-    int frequency[N_FREQUEUNCY];
+    int frequency[N_FREQUEUNCY] ={0};
     scanf("%s",s);
 
     for (int i = 0;  s[i] != '\0' ; ++i)
