@@ -63,7 +63,7 @@ void operate(FILE *d)
         }
         else if (grade > MAXGRADE || grade < MINGRADE)
         {
-            fprintf(stderr, "Error: illegal grade,line number is: %d \n", line_num);
+            fprintf(stderr, "Error at line %d: Invalid grade (not between %d and %d)\n", line_num, MINGRADE, MAXGRADE);
             exit(1);
         }
             hist[grade]++;

@@ -46,11 +46,18 @@ int main(int argc, char **argv) {
 
 	if (!f) {
 		fprintf (stderr, "File not found: %s \n" , argv[1]);
+        perror("fopen");
 		return 1;
 	}
 
 	min(f);
+    if(f != stdin)
+    {
+        fclose(f);
+    }
+    return 0;
 }
+
 
 
 

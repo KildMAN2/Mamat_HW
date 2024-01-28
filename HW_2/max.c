@@ -50,6 +50,9 @@ int main(int argc, char **argv) {
 	}
 
 	max(f);
+    if (f != stdin) {
+        fclose(f);
+    }
 }
 
 
