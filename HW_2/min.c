@@ -7,25 +7,21 @@ void min(FILE *f) {
 	int grade;
 	int retVal;
 	int min_num = 100;
-	int lineNum = 0;
+	int line_num = 1;
 
 	while(1) {
 		retVal = fscanf(f, "%d" , &grade);
 		if (retVal == EOF) {
 			break;
 		}
-		else if (retVal != 1) {
-			fprintf(stderr, "line %d: Not a number \n" , lineNum);
-			exit(1);
-		}
-		else if (grade > 100 || grade < 0 ) {
-			fprintf(stderr, "line %d : Not a legal number\n", lineNum);
+		else if (retVal != 1 || grade > 100 || grade < 0) {
+            fprintf(stderr, "Error at line %d: grade %d invalid \n", line_num,grade);
 			exit(1);
 		}
 		else if (grade < min_num) {
 			min_num = grade;
 		}
-		lineNum++;
+		line_num++;
 	}
 	fprintf(stdout,"%d\t", min_num );
 
@@ -46,18 +42,14 @@ int main(int argc, char **argv) {
 
 	if (!f) {
 		fprintf (stderr, "File not found: %s \n" , argv[1]);
-        perror("fopen");
 		return 1;
 	}
 
 	min(f);
-    if(f != stdin)
-    {
+    if (f != stdin) {
         fclose(f);
     }
-    return 0;
 }
-
 
 
 

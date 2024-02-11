@@ -13,7 +13,6 @@
  */
  static FILE *f;
  static int nbins = 10;
-#define MAX_GRADE 100
 
 
 
@@ -30,9 +29,8 @@ int main(int argc, char **argv)
         fprintf(stderr,"FILE not found: \"%s\"\n",argv[1]);
         return 1;
     }
-    int *bins = (int *) calloc(nbins,sizeof (int));
+    int *bins = (int *) calloc(nbins, sizeof (int));
     fill(bins);
-    fclose(f);
     free(bins);
     return 0;
 }
@@ -49,12 +47,18 @@ void certify_arg(int argc, char **argv)
         {
             if (!strcmp(argv[i],"-nbins"))
             {
-                nbins= (i<(argc-1)) ? atoi(argv[i+1]): nbins ;
+                nbins= (i < (argc - 1)) ? atoi(argv[i + 1]) : nbins ;
                 i++;
             }
             else
             {
                 f= fopen(argv[i], "r");
+                ///below that i did this if (if the code didnt work delete it please ///
+                if (!f)
+                {
+                    fprintf(stderr,"FILE not found: \"%s\"\n",argv[1]);
+                    exit(1) ;
+                }
             }
 
         }
@@ -64,7 +68,7 @@ void certify_arg(int argc, char **argv)
 void fill(int *bins)
 {
     int grade,retval;
-    double distance = MAX_GRADE/nbins;
+    double distance;
     while(1)
     {
         retval = fscanf(f,"%d",&grade);
@@ -79,11 +83,15 @@ void fill(int *bins)
                 fprintf(stderr, "Error: not a number\n");
                 exit(1);
             }
+            else if (grade > 100 || grade < 0 ) {
+                fprintf(stderr, "grade %d invalid \n",grade);
+                exit(1);
+            }
 
         }
-
-       int place = (int) grade / distance;
-        if (grade != MAX_GRADE)
+        
+       int place = grade / (100 / nbins);;
+        if (grade != 100) 
         {
             bins[place]++;
         }
@@ -95,11 +103,11 @@ void fill(int *bins)
     }
 
 
-    distance = MAX_GRADE/nbins;
+    distance = 100.0 / nbins;
     for (int i = 0; i < nbins; ++i)
     {
         double left_edge = i * distance;
-        double right_edge = (i<(nbins-1)) ? ((i+1)*distance -1) : MAX_GRADE;
+        double right_edge = (i<(nbins - 1)) ? ((i + 1) * distance - 1) : 100;
         printf("%.f-%.f\t%d\n",left_edge,right_edge,bins[i]);
     }
 }
