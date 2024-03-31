@@ -1,0 +1,21 @@
+# ninja log v5
+0	9	1711924147152150295	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	e7669503abaa8d9
+0	9	1711924147152150295	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	e7669503abaa8d9
+9	1739	1711924148881901180	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	9ef6bb36baa21487
+9	1739	1711924148881901180	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	9ef6bb36baa21487
+1739	1749	1711924148891784559	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	528538869e637a3
+1739	1749	1711924148891784559	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	528538869e637a3
+1749	1758	1711924148900858070	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	c915020f4f61daa4
+1749	1758	1711924148900858070	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	c915020f4f61daa4
+1758	1766	1711924148909393501	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	e857e19efe362b62
+1758	1766	1711924148909393501	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	e857e19efe362b62
+1766	1775	1711924148917927183	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	db2f3773976b9712
+1766	1775	1711924148917927183	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	db2f3773976b9712
+1775	1783	1711924148926451073	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	83191971dccd3cf6
+1775	1783	1711924148926451073	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	83191971dccd3cf6
+1783	1792	1711924148934995005	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	f0034d83ccef4c8d
+1783	1792	1711924148934995005	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	f0034d83ccef4c8d
+1792	1804	1711924148947166574	CMakeFiles/googletest-populate-complete	a982fe68d89375a0
+1792	1804	1711924148947166574	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	a982fe68d89375a0
+1792	1804	1711924148947166574	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/CMakeFiles/googletest-populate-complete	a982fe68d89375a0
+1792	1804	1711924148947166574	/Users/kildman/Mamat_HW/HW62/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	a982fe68d89375a0
