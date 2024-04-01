@@ -18,7 +18,7 @@ private:
 public:
     String();
     String(const String &str);
-    explicit String(const char * str);
+     String(const char * str);
      bool operator==(const GenericString &other) const override  ;
      bool operator==(const char *other) const override ;
     StringArray split(const char *delimiters) const override ;
@@ -27,7 +27,10 @@ public:
     int to_integer() const override ;
     String& as_string() override ;
     const String& as_string() const override ;
-    ~String() override;
+    String& operator=(const String &other) ;
+
+
+    ~String() override ;
 
 
 };

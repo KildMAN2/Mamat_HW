@@ -22,8 +22,8 @@ private:
 public:
     StringArray(int capacity = 10);
     ~StringArray();
-    StringArray (const StringArray &other);
-    StringArray & operator = (const StringArray &other);
+    StringArray (const StringArray &other) ;
+    StringArray & operator = (const StringArray &other) ;
     void add(GenericString* str);
     void remove(int index);
     GenericString* get(int index) const;

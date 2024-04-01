@@ -32,5 +32,6 @@ public:
     bool set_value(String value) ;
 
     bool match(const GenericString &packet) const ;
+
 };
 #endif //PORT_H

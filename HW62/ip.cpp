@@ -28,21 +28,35 @@ bool Ip::set_value(GenericString& packet)
     {
         return false;
     }
-    for (int i = 0; i < 4; ++i)
+    StringArray temp = splitByDot.get(0)->split("=");
+    if (temp.size()!=2)
+        return false;
+    char octetStr[4]; // Max 3 digits for an octet + null terminator
+    snprintf(octetStr, sizeof(octetStr), "%d", temp.get(1)->to_integer());
+
+    GenericString* temps = make_string(octetStr);
+    ip_fields.add(temps);
+    delete temps;
+    for (int i = 1; i < 4; ++i)
     {
         int octet = splitByDot.get(i)->to_integer();
         if (octet >255 || octet <0)
         {
             return false;
         }
-        char octetStr[4]; // Max 3 digits for an octet + null terminator
         snprintf(octetStr, sizeof(octetStr), "%d", octet);
-
-        // Use make_string (if it correctly handles allocation) to add to ip_fields.
-        // Ensure make_string creates a String object, which ip_fields can store.
-        ip_fields.add(make_string(octetStr));
+         temps = make_string(octetStr);
+        ip_fields.add(temps);
+        delete temps;
     }
     legal_bits =subnetMask;
+    StringArray splitByEqual = packet.as_string().split("=");
+    if (splitByEqual.size() != 2 )
+    {
+        return false;
+    }
+    currentField = splitByEqual.get(0)->as_string();
+
     return true;
 }
 bool  Ip::match(const GenericString &packet) const {
@@ -55,7 +69,7 @@ bool  Ip::match(const GenericString &packet) const {
         return false;
     }
 
-    for (size_t i = 0; i < packetSplit.size(); i += 2) {
+    for (int i= 0; i < packetSplit.size(); i += 2) {
         // Directly access and trim the key
         String key = packetSplit.get(i)->trim().as_string();
 
@@ -100,6 +114,7 @@ Ip ::Ip(String packet)
 {
     set_value(packet);
 }
+
 
 
 

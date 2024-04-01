@@ -19,12 +19,23 @@ String ::String()
     length = 1;
 }
 
+String& String::operator=(const String &other) {
+    if (this != &other) {
+        char* newData = new char[other.length ];
+        strcpy(newData, other.data);
+        delete[] data;
+        data = newData;
+        length = other.length;
+    }
+    return *this;
+}
+
+
 String ::String(const String &str)
 {
     data = new char [str.length];
     length = str.length;
     strcpy(data,str.data);
-    data[length - 1] = '\0';
 }
 StringArray String ::split(const char *delimiters) const
 {
@@ -45,8 +56,10 @@ StringArray String ::split(const char *delimiters) const
                 char* substring = new char [i - start +1];
                 strncpy(substring, data + start, i - start);
                 substring[i - start] = '\0';
-                result.add(make_string(substring));
+                GenericString * temp = make_string(substring);
+                result.add(temp);
                 delete [] substring;
+                delete temp;
             }
             start = i + 1; //move start to the past delimiter
         }
@@ -58,8 +71,10 @@ StringArray String ::split(const char *delimiters) const
         char* substring = new char [length - start + 1];
         strncpy(substring, data + start,length - start);
         substring[length - start] = '\0';
-        result.add(make_string(substring));
+        GenericString * temp = make_string(substring);
+        result.add(temp);
         delete [] substring;
+        delete temp;
     }
     return result;
 }
@@ -99,9 +114,12 @@ GenericString* make_string(const char *str)
 {
     return new String(str); // Assuming String is derived from GenericString
 }
-String :: ~String() {
-    delete [] data;
+String::~String() {
+   // if (length == 0 && data != nullptr) return;
+    delete[] data;
+    length = 0;
 }
+
 GenericString& String::trim() {
 
     int l_counter=0;//spaces at the beginning

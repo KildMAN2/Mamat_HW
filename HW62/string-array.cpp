@@ -26,23 +26,24 @@ CurrentSize(other.CurrentSize)
        array[i] = other.array[i];
     }
 }
-StringArray& StringArray::operator=(const StringArray &other){
-    if(this != &other)
-    {
-        // clean up if there existing array
-        for (int i = 0; i < CurrentSize; ++i)
-        {
+StringArray& StringArray::operator=(const StringArray &other) {
+    if (this != &other) {
+        // Deep copy with proper cleanup
+        GenericString** newArray = new GenericString*[other.capacity];
+        for (int i = 0; i < other.CurrentSize; ++i) {
+            newArray[i] = other.array[i];
+        }
+        for (int i = 0; i < CurrentSize; ++i) {
             delete array[i];
         }
+        delete[] array; // Correctly delete the old array
+        array = newArray;
         capacity = other.capacity;
         CurrentSize = other.CurrentSize;
-        for (int i = 0; i < CurrentSize; ++i)
-        {
-            array[i] = other.array[i];
-        }
     }
-    return  *this;
+    return *this;
 }
+
 void StringArray::resize()
 {
     capacity *=2;
@@ -58,7 +59,7 @@ void StringArray::add(GenericString *str)
     {
         resize();
     }
-    array[CurrentSize++] = str;
+    array[CurrentSize++] = new String(str->as_string());
 }
 void StringArray::remove(int index)
 {
@@ -69,6 +70,7 @@ void StringArray::remove(int index)
         {
             array[i] = array[i + 1];
         }
+        array[CurrentSize - 1] = nullptr;
         CurrentSize--;
     }
 }
