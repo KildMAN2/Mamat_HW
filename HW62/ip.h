@@ -1,19 +1,22 @@
-#ifndef IP_H
-#define IP_H
+//
+// Created by Badir on 28/03/2024.
+//
 
-#include "string.h" // Ensure this includes your custom String class
+#ifndef HW06_NEW__IP_H
+#define HW06_NEW__IP_H
 #include "generic-field.h"
+#include "string.h"
 
-class Ip : public GenericField {
-private:
+class ip : public GenericField {
     String currentField;
-    StringArray ip_fields;
-    int legal_bits;
+    int legalBits;
+    int ipFields[4];
+
 public:
-    Ip(String packet);
-    bool set_value(GenericString &packet);
-    bool match(const GenericString &packet) const;
+    ip(String str);
+    virtual bool match(const GenericString &packet) const ;
+    virtual void rules(const GenericString &packet);
+    bool check_Shifting(String array)const;
+    int shift_Right(int val , int after_slash)const;
 };
-
-
-#endif // IP_H
+#endif //HW06_NEW__IP_H

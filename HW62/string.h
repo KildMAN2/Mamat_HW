@@ -24,10 +24,15 @@ public:
     StringArray split(const char *delimiters) const override ;
     GenericString& operator=(const char *str) override ;
     GenericString& trim() override ;
+
     int to_integer() const override ;
     String& as_string() override ;
     const String& as_string() const override ;
     String& operator=(const String &other) ;
+    bool operator==(const String& other) const;
+
+    // Inequality operator declaration
+    bool operator!=(const String& other) const;
 
 
     ~String() override ;

@@ -20,9 +20,11 @@ private:
     void resize ();
 
 public:
-    StringArray(int capacity = 10);
+    void clear(); // Declaration of the clear method
+
+    StringArray(int capacity = 4);
     ~StringArray();
-    StringArray (const StringArray &other) ;
+    StringArray (const StringArray &other)  ;
     StringArray & operator = (const StringArray &other) ;
     void add(GenericString* str);
     void remove(int index);

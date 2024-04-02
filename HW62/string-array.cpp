@@ -11,12 +11,21 @@ StringArray :: StringArray(int capacity) : capacity(capacity), CurrentSize(0)
 }
 StringArray :: ~StringArray()
 {
-    for (int i = 0; i < CurrentSize; ++i)
+    for (int i = 0; i < capacity; ++i)
     {
         delete array[i];
     }
     delete array;
 }
+void StringArray::clear() {
+    // Loop through the array, safely deleting each GenericString* pointer
+    for (int i = 0; i < CurrentSize; ++i) {
+        delete array[i];
+        array[i] = nullptr; // Nullify the pointer after deletion
+    }
+    CurrentSize = 0; // Reset the size of the array to zero
+}
+
 StringArray ::StringArray(const StringArray &other) : capacity(other.capacity),
 CurrentSize(other.CurrentSize)
 {
@@ -31,7 +40,7 @@ StringArray& StringArray::operator=(const StringArray &other) {
         // Deep copy with proper cleanup
         GenericString** newArray = new GenericString*[other.capacity];
         for (int i = 0; i < other.CurrentSize; ++i) {
-            newArray[i] = other.array[i];
+            newArray[i] = dynamic_cast <String*> (other.array[i]);
         }
         for (int i = 0; i < CurrentSize; ++i) {
             delete array[i];
@@ -85,6 +94,9 @@ GenericString* StringArray::get(int index) const
 }
 GenericString* StringArray::get(int index)
 {
-    assert((index >=0) && (index < CurrentSize));
-    return array[index];
+    if (((index >=0) && (index < CurrentSize)))
+    {
+        return array[index];
+    } else
+        return nullptr;
 }

@@ -1,64 +1,42 @@
 #include <iostream>
+#include "port.h"
+#include "ip.h"
 #include "input.h"
 #include "string.h"
-#include "ip.h"
-#include "port.h"
 
-
-int main(int argc, char **argv) {
-    if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << " <field>=<value>" << std::endl;
+int main(int argc, char** argv) {
+    if (argc <2)
         return -1;
-    }
 
-    String input = String(argv[1]);
-    input = input.trim().as_string();
-    StringArray inputArgs = input.split("=,");
+    char delimeters[2] = {'=',','};
+    String trimArray = String(argv[1]);
+    trimArray=trimArray.trim().as_string();
+    StringArray splitArray = trimArray.split(delimeters);
 
-    if (inputArgs.size() != 2) {
-        std::cerr << "Invalid input format. Please provide input in the format <field>=<value>" << std::endl;
-        return -1;
-    }
 
-    String fieldName = inputArgs.get(0)->trim().as_string();
-    String fieldValue = inputArgs.get(1)->trim().as_string();
-
-    if (fieldName == ("src-ip")) {
-        String temp ( "src-ip");
-        Ip srcIp(temp);
-        if (!srcIp.set_value(fieldValue)) {
-            std::cerr << "Invalid src-ip value." << std::endl;
-            return -1;
-        }
+    if(splitArray.get(0)->as_string() == "src-ip")
+    {
+        ip srcIp("src-ip");
+        srcIp.rules(splitArray.get(1)->as_string());
         parse_input(srcIp);
-    } else if (fieldName == ("dst-ip")) {
-        String tempdstIp ( "dst-ip");
-        Ip dstIp(tempdstIp);
-        if (!dstIp.set_value(fieldValue)) {
-            std::cerr << "Invalid dst-ip value." << std::endl;
-            return -1;
-        }
-        parse_input(dstIp);
-    } else if (fieldName == ("src-port")) {
-        String tempsrcPort ( "src-port");
-        Port srcPort(tempsrcPort);
-        if (!srcPort.set_value(fieldValue)) {
-            std::cerr << "Invalid src-port value." << std::endl;
-            return -1;
-        }
-        parse_input(srcPort);
-    } else if (fieldName == ("dst-port")) {
-        String tempdstPort ( "dst-port");
-        Port dstPort(tempdstPort);
-        if (!dstPort.set_value(fieldValue)) {
-            std::cerr << "Invalid dst-port value." << std::endl;
-            return -1;
-        }
-        parse_input(dstPort);
-    } else {
-        //std::cerr << "Unknown field name: " << fieldName << std::endl;
-        return -1;
     }
+    if((splitArray.get(0))->as_string().operator==("dst-ip")){
+        ip dstIp("dst-ip");
+        dstIp.rules(*splitArray.get(1));
+        parse_input(dstIp);
+    }
+    if(splitArray.get(0)->as_string() == "src-port"){
+        port srcport("src-port");
+        srcport.rules(splitArray.get(1)->as_string());
+        parse_input(srcport);
 
+
+    }
+    if((splitArray.get(0)->as_string() == "dst-port"))
+    {
+        port dstport("dst-port");
+        dstport.rules(splitArray.get(1)->as_string());
+        parse_input(dstport);
+    }
     return 0;
 }

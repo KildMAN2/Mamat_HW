@@ -1,61 +1,52 @@
 //
-// Created by sari mansour on 31/03/2024.
-//
-//
-// Created by sari mansour on 31/05/2023.
-//
+// Created by sari mansour on 30/03/2024.
 
 #include "port.h"
-#include "string.h"
-
-#define MAX 65535
-#define MIN 0
-#define LENGTH 2
-#define ONE 1
 
 
+port::port(String str) : CurrentField(str) {
+    portRanges[0]=0;
+    portRanges[1]=0;
+}
+bool port::helping_func(String arr) const{
+    int port_value = arr.trim().to_integer();
+    return ((port_value >= portRanges[0]) && (port_value <= portRanges[1]));
 
-
-
-
-bool Port::set_value(String value) {
-    StringArray parts = value.trim().split("-");
-    if (parts.size() != 2) return false;
-
-    src_port = parts.get(0)->to_integer();
-    dst_port = parts.get(1)->to_integer();
-
-    if (src_port < MIN || dst_port > MAX) return false;
-    return src_port <= dst_port;
 }
 
+bool port::match(const GenericString &packet) const {
 
-bool  Port::match(const GenericString &packet) const {
-    const String& packetStr = packet.as_string();
-    StringArray fields = packetStr.split(",");
-    for (int i = 0; i < fields.size(); ++i)
+    bool val = false;
+
+
+    StringArray arr=packet.split("=, ");
+    int size = arr.size();
+    if(!size )
     {
-        const String& field = fields.get(i)->as_string();
-        StringArray keyValue = field.split("=");
-        if(keyValue.size() == LENGTH)
-        {
-            const String& key = keyValue.get(0)->as_string();
-            const String& value = keyValue.get(ONE)->as_string();
-            if(key == "src-port")
-            {
-                int portValue = value.to_integer();
-                if((portValue >= src_port) && (portValue <= dst_port))
-                    return true;
-            }
-        }
-
+        return false;
     }
-    return false;
-}
-Port::Port(const String& value) {
-    set_value(value);
+    for (int i = 0; i < size; i=i+2) {
+        if(CurrentField == ((arr.get(i)->as_string())))
+        {
+            val=helping_func(arr.get(i+1)->as_string());
+            break;
+        }
+    }
+    return val;
+
 }
 
+void port :: rules(const GenericString &packet){
+    const String* rule = &packet.as_string();
+    // Split the rule string based on the delimiter '-'
+    StringArray splitResult = rule->split("-");
 
+    // Check if the split operation gave us two parts (start and end of the range)
+    if (splitResult.size() >= 2) {
+        // Convert the start and end of the range from String to integer and store them
+        portRanges[0] = splitResult.get(0)->trim().to_integer();
+        portRanges[1] = splitResult.get(1)->trim().to_integer();
+    }
+}
 
 

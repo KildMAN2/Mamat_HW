@@ -7,9 +7,15 @@
 
 String :: String(const char *str)
 {
-    data = new char [strlen(str) + 1];
-    strcpy(data,str);
-    length = strlen(str) + 1;
+    if (str) {
+        length = strlen(str);
+        data = new char[length + 1]; // +1 for null terminator
+        strcpy(data, str);
+    } else {
+        length = 0;
+        data = new char[1];
+        data[0] = '\0';
+    }
 }
 
 String ::String()
@@ -97,10 +103,22 @@ bool String ::operator==(const GenericString &other) const {
     }
     return false;
 }
+bool String::operator==(const String& other) const {
+    // Your implementation, e.g., comparing the internal string data
+    return strcmp(data, other.data) == 0;
+}
+
+bool String::operator!=(const String& other) const {
+    // Leverage the equality operator for inequality check
+    return !(*this == other);
+}
+
 bool String :: operator ==(const char *str) const
 {
-    return strcmp(data,str) == 0;
+    if (data == nullptr || str == nullptr) return false;
+    return strcmp(data, str) == 0;
 }
+
 int String :: to_integer() const {
     return atoi(data);
 }
@@ -121,30 +139,36 @@ String::~String() {
 }
 
 GenericString& String::trim() {
+    int l_counter = 0; // Spaces at the beginning
+    int r_counter = 0; // Spaces at the end
 
-    int l_counter=0;//spaces at the beginning
-    int r_counter=0;//spaces at the end
-
-//checks the number of spaces at the start of the string
-    for (int i =0;i<length;i++) {
-        if (data[i] !=' ') break;
+    // Count leading spaces
+    for (int i = 0; i < length; i++) {
+        if (data[i] != ' ') break;
         l_counter++;
     }
-//checks the number of spaces at the end of the string
-    for (int j = length - 1; j>=0 ;j--) {
-        if (data[j] !=' ') break;
+
+    // Count trailing spaces
+    for (int j = length - 1; j >= 0; j--) {
+        if (data[j] != ' ') break;
         r_counter++;
     }
-    int newLength = length -r_counter-l_counter;
-    char* newdata = new char [newLength +  1];
-    for (int m = 0, n = l_counter; n < length - r_counter; m++, n++) {
-        newdata[m] = data[n];
-    }
-    newdata[newLength] = '\0';
-//deleting leading and railing spaces
 
-    delete [] data;
+    int newLength = length - l_counter - r_counter;
+
+    // Check if any trimming is needed
+    if (l_counter == 0 && r_counter == 0) {
+        return *this; // No trimming needed
+    }
+
+    char* newdata = new char[newLength + 1]; // +1 for null terminator
+    strncpy(newdata, data + l_counter, newLength);
+    newdata[newLength] = '\0';
+
+    // Replace the old data
+    delete[] data;
     data = newdata;
     length = newLength;
+
     return *this;
 }
