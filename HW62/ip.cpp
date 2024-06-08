@@ -1,5 +1,5 @@
 //
-// Created by sari mansour on 30/03/2024.
+// Created by sari mansour on 31/03/2024.
 
 #include "ip.h"
 #include "string.h"
@@ -85,7 +85,7 @@ void ip :: rules(const GenericString &packet){
         StringArray dotSplit = slashSplit.get(0)->as_string().split(".");
 
         this->legalBits = slashSplit.get(1)->as_string().to_integer();
-
+        // find the fields or converted from string to integer
         for (int k = 0; k < 4; ++k) {
             this->ipFields[k] = dotSplit.get(k)->as_string().to_integer();
         }

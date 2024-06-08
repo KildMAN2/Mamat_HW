@@ -11,6 +11,7 @@ StringArray :: StringArray(int capacity) : capacity(capacity), CurrentSize(0)
 }
 StringArray :: ~StringArray()
 {
+    //was here to check if it is null before i do delete
     for (int i = 0; i < capacity; ++i)
     {
         delete array[i];
